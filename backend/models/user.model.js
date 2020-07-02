@@ -19,6 +19,16 @@ userSchema.path('username').validate(async(username)=>{
     return !usernameCount
 },'Username already exists');
 
+// using to somewhat serialize instance
+
+userSchema.methods.toJSON = function(){
+    let obj =  this.toObject()
+    let attrToRemove = ['createdAt','updatedAt','__v']
+    attrToRemove.forEach(att => delete obj[att])
+    return obj
+}
+
+
 const User = mongoose.model('User',userSchema);
 
 module.exports = User;
