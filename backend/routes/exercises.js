@@ -16,10 +16,10 @@ router.route('/add').post((req,res)=>{
 
     
     const newExercise =  new Exercise({username,description,duration,date,});
-
+    const errorHandler = require('../helpers/errorHandler')
     newExercise.save()
         .then(()=>res.json('exercise added!'))
-        .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(400).json(errorHandler(err.errors)))
 });
 
 // GET - EXERCISE

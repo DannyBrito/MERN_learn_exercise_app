@@ -1,7 +1,7 @@
 import React,{ useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import {BaseUrl} from '../variables/const'
-import {errorFormater} from '../variables/fetchHelpers'
+import {responseHandler} from '../variables/fetchHelpers'
 const CreateUser = () =>{
     
     const [username, setUsername] = useState('')
@@ -24,15 +24,11 @@ const CreateUser = () =>{
             body: JSON.stringify(data)
         })
         // (one promise per request,meaing can only perform .json() once, work-around attach then after json call)
-        .then(res =>res.json()
-                    .then(dt =>({status: res.ok, body:dt}))
-            )
+        // responseHandler returns obj response if ok.Otherwise throws error
+        .then(responseHandler)
             .then(res =>{
-                if(!res.status) throw(errorFormater(res.body))
-                else{
-                    console.log(res.body)
-                    history.push('/')
-                }
+                console.log('here ', res)
+                history.push('/')
             })
             .catch(window.alert);
     }

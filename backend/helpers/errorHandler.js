@@ -1,9 +1,11 @@
 const errorHandler = errors =>{
     let result = {}
-    console.log(errors)
-    Object.keys(errors).forEach(key =>
-        result[key]= (errors[key].properties.message)
-    )
+    // console.log( "HERE ", errors.date, ' END')
+    const dateRegex = /^Cast to date failed for value/gmi
+    Object.keys(errors).forEach(key =>{
+        result[key]= (errors[key].message)
+        if(dateRegex.test(result[key]))result[key] = 'Date is required'
+    })
     return result
 }
 

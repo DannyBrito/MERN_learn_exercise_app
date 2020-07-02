@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom'
 import {BaseUrl} from '../variables/const'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
+import { responseHandler } from '../variables/fetchHelpers';
 const CreateExercise = () =>{
     
     const [username, setUsername] = useState('')
@@ -29,8 +30,9 @@ const CreateExercise = () =>{
             },
             body: JSON.stringify(data)
         })
-            .then(res=>res.json)
-            .then(res=>{
+            .then(responseHandler)
+            .then((res)=>{
+                console.log(res)
                 history.push('/')
             })
             .catch(window.alert)
@@ -39,9 +41,7 @@ const CreateExercise = () =>{
     useEffect(()=>{
         fetch(BaseUrl +'/users')
             .then(res =>res.json())
-            .then(res =>{
-                console.log(res)
-                setUsers(res)})
+            .then(res =>setUsers(res)) // only throw if network errors
             .catch(console.log)
     },[])
     
