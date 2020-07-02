@@ -27,7 +27,6 @@ const CreateUser = () =>{
         // responseHandler returns obj response if ok.Otherwise throws error
         .then(responseHandler)
             .then(res =>{
-                console.log('here ', res)
                 history.push('/')
             })
             .catch(window.alert);

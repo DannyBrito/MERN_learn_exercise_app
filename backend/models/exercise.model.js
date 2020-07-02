@@ -1,15 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-// phone: {
-// type: String,
-// validate: {
-//   validator: function(v) {
-//     return /\d{3}-\d{3}-\d{4}/.test(v);
-//   },
-//   message: props => `${props.value} is not a valid phone number!`
-// },
-// required:[true,"Phone Number required"]
+
 const exerciseSchema = new Schema({
     username:{type: String,required:true},
     description:{type: String,required:true},
@@ -19,10 +11,14 @@ const exerciseSchema = new Schema({
     timestamps: true,
 });
 
-// Doesn't affect
-// exerciseSchema.path('date').validate(async(date)=>{
-//     return date instanceof Date
-// },'Error Try again');
+// using to somewhat serialize instance
+
+exerciseSchema.methods.toJSON = function(){
+    let obj =  this.toObject()
+    let attrToRemove = ['createdAt','updatedAt','__v']
+    attrToRemove.forEach(att => delete obj[att])
+    return obj
+}
 
 const Exercise = mongoose.model('Exercise', exerciseSchema);
 

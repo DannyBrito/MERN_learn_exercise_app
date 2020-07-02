@@ -1,12 +1,14 @@
 const router = require('express').Router();
 let Exercise = require('../models/exercise.model');
 
+// GET -> '/exercises'
 router.route('/').get((req, res)=>{
     Exercise.find()
         .then(exercises => res.json(exercises))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// POST -> '/exercises'
 router.route('/').post((req,res)=>{
 
     const username = req.body.username;
@@ -18,25 +20,25 @@ router.route('/').post((req,res)=>{
     const newExercise =  new Exercise({username,description,duration,date,});
     const errorHandler = require('../helpers/errorHandler')
     newExercise.save()
-        .then(()=>res.json('exercise added!'))
+        .then(()=>res.json({message:'exercise added!', exercise: newExercise}))
         .catch(err => res.status(400).json(errorHandler(err.errors)))
 });
 
-// GET - EXERCISE
+// GET -> '/exercises/:id'
 router.route('/:id').get((req,res)=>{
     Exercise.findById(req.params.id)
         .then(exercise=> res.json(exercise))
         .catch(err => res.status(400).json('Error: ' + err))
 });
 
-// DELETE - EXERCISE
-
+// DELETE -> '/exercises/:id'
 router.route('/:id').delete((req,res)=>{
     Exercise.findByIdAndDelete(req.params.id)
         .then(()=> res.json('Exercise deleted'))
         .catch(err => res.status(400).json('Error: ' + err))
 });
 
+//PUT -> '/exercises/:id'
 router.route('/:id').put((req,res)=>{
     Exercise.findByIdAndUpdate(req.params.id,{
         username: req.body.username,
