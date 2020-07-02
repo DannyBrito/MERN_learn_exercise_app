@@ -22,7 +22,7 @@ const CreateExercise = () =>{
             duration,
             date
         }
-        fetch(BaseUrl + '/exercises/add',{
+        fetch(BaseUrl + '/exercises',{
             method:'POST',
             headers: {
                 'Accept': 'application/json',
