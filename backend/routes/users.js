@@ -5,7 +5,7 @@ let User = require('../models/user.model');
 router.route('/').get((req, res)=>{
     User.find()
     .select('_id username') //select desire attributes for class
-    .then(users => res.json(users))
+    .then(users => res.status(200).json(users))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
