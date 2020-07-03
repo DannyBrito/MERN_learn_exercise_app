@@ -11,7 +11,6 @@ const ExercisesList = () =>{
         fetch(BaseUrl + '/exercises')
             .then(responseHandler)
             .then(({body})=>{
-                console.log(body)
                 setExercises(body)
             })
             .catch(window.alert)
