@@ -33,9 +33,10 @@ router.route('/:id').get((req,res)=>{
 
 // DELETE -> '/exercises/:id'
 router.route('/:id').delete((req,res)=>{
-    Exercise.findByIdAndDelete(req.params.id)
-        .then(()=> res.json('Exercise deleted'))
-        .catch(err => res.status(400).json('Error: ' + err))
+    Exercise.findByIdAndDelete(req.params.id,function(err,doc){
+        if(err || !doc)res.status(400).json('Error: ' + err)
+        else res.json('Exercise deleted')
+    })
 });
 
 //PUT -> '/exercises/:id'
