@@ -1,26 +1,10 @@
 const router = require('express').Router();
-let User = require('../models/user.model');
+const controller = require('../controllers/users')
 
 // GET -> '/users'
-router.route('/').get((req, res)=>{
-    User.find()
-    .select('_id username') //select desire attributes for class
-    .then(users => res.status(200).json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+router.route('/').get(controller.users_index);
 
 // POST -> '/users'
-router.route('/').post((req,res)=>{
-    const username = req.body.username;
-
-    const newUser =  new User({username});
-
-    const errorHandler = require('../helpers/errorHandler')
-    newUser.save()
-        .then(()=>res.status(200).json({message:'User added!',user:newUser}))
-        .catch(err => { 
-            res.status(400).json(errorHandler(err.errors))
-        })
-});
+router.route('/').post(controller.user_create);
 
 module.exports = router;
