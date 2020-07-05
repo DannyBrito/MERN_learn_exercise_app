@@ -7,11 +7,9 @@ exports.users_index = (req, res) =>{
     .catch(err => res.status(400).json('Error: ' + err));
 }
 
-exports.user_create = (req,res) =>{
+exports.users_create = (req,res) =>{
     const username = req.body.username;
-
     const newUser =  new User({username});
-
     const errorHandler = require('../helpers/errorHandler')
     newUser.save()
         .then(()=>res.status(200).json({message:'User added!',user:newUser}))
